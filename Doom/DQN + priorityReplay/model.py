@@ -10,9 +10,9 @@ class Network(nn.Module):
         
         #input #240 x 320 x 1
         
-        self.layer_1 = nn.Conv2d(in_channels = 1, out_channels = 64, kernel_size = 5)  # 118 x 158 x 128
-        self.layer_2 = nn.Conv2d(in_channels = 64, out_channels = 32, kernel_size = 3) # 58 x 78 x 64
-        self.layer_3 = nn.Conv2d(in_channels = 32, out_channels = 32, kernel_size = 2) # 29 x 39 x 32
+        self.layer_1 = nn.Conv2d(in_channels = 1, out_channels = 32, kernel_size = 5)  # 118 x 158 x 128
+        self.layer_2 = nn.Conv2d(in_channels = 32, out_channels = 32, kernel_size = 3) # 58 x 78 x 64
+        self.layer_3 = nn.Conv2d(in_channels = 32, out_channels = 64, kernel_size = 2) # 29 x 39 x 32
         
         self.lstm = nn.LSTMCell(self.calculate_flattered_size((1, 84, 84)), 256)
         self.lstm.bias_ih.data.fill_(0)
