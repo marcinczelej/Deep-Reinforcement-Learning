@@ -40,8 +40,8 @@ def train(process_number, params, shared_model, shared_optimizer):
         for i in range(params.n_steps):
             if done:
                 length = 0
-                hx = Variable(torch.zeros(1, 128, device=params.device))
-                cx = Variable(torch.zeros(1, 128, device=params.device))
+                hx = Variable(torch.zeros(1, 256, device=params.device))
+                cx = Variable(torch.zeros(1, 256, device=params.device))
             else:
                 length +=1
                 hx = Variable(hx.data)
@@ -59,7 +59,9 @@ def train(process_number, params, shared_model, shared_optimizer):
             kills_delta = game.get_game_variable(GameVariable.KILLCOUNT) - last_total_kills
             last_total_kills = game.get_game_variable(GameVariable.KILLCOUNT)
             
-            rewards.append(reward+healthReward(health_delta)+killsReward(kills_delta))
+            reward_sum = reward+healthReward(health_delta)+killsReward(kills_delta)
+            reward_sum = reward_sum/100
+            rewards.append(reward)
             done = game.is_episode_finished() or length >=4200
             if done:
                 game.new_episode()
@@ -92,8 +94,9 @@ def train(process_number, params, shared_model, shared_optimizer):
             gae = gae*params.gamma*params.tau + TD
             policy_loss = policy_loss - log_probs[i]*Variable(gae) - 0.01*entropys[i]
         loss = policy_loss + 0.5*value_loss
-        model.zero_grad()
+        shared_optimizer.zero_grad()
         loss.backward()
+        torch.nn.utils.clip_grad_norm_(model.parameters(), 40)
         for param, shared_param in zip(model.parameters(), shared_model.parameters()):
             if shared_param.grad is not None:
                 break

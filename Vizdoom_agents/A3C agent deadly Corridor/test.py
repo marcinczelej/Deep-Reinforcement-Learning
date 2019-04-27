@@ -33,8 +33,8 @@ def test(params, shared_model):
             if done:
                 episode += 1
                 model.load_state_dict(shared_model.state_dict())
-                cx = Variable(torch.zeros(1, 128))
-                hx = Variable(torch.zeros(1, 128))
+                cx = Variable(torch.zeros(1, 256))
+                hx = Variable(torch.zeros(1, 256))
             else:
                 cx = Variable(cx.data)
                 hx = Variable(hx.data)
