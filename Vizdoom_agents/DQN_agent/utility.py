@@ -17,7 +17,7 @@ actions = [left, right, shoot]
 
 class params():
     batch_size = 64
-    buffer_size = 10000
+    buffer_size = 100
     learning_rate = 0.0001
     gamma = 0.99
     learnig_interval = 5
@@ -52,7 +52,7 @@ def prepopulate_buffer(game, agent):
         last_ammo = game.get_game_variable(GameVariable.AMMO2)
         next_state = state = game.get_state()
         while True:
-            if samples_amount==10000:
+            if samples_amount==100:
                 break
             if samples_amount %500 == 0:
                 print(samples_amount)
@@ -88,6 +88,6 @@ def prepopulate_buffer(game, agent):
             agent.memoryBuffer.add(preprocess_frame(starting_state), first_action, discounted_reward, next_img, done)
 
             samples_amount+=1
-        if samples_amount==10000:
+        if samples_amount==100:
             break
     print("prepopulation stop")
