@@ -1,14 +1,15 @@
-from model import a3cNetwork
 import numpy as np
 import time
 import torch
+
+from model import a3cNetwork
+from torch.autograd import Variable
 from vizdoom import *
 from utility import *
-from torch.autograd import Variable
 
 def test(params, shared_model):
     game = DoomGame()
-    # change this for vizdoom defend_the_center path
+    # change this for vizdoom scenario path
     game.load_config("./scenario/deadly_corridor.cfg")
     game.set_screen_format(ScreenFormat.GRAY8)
     game.set_window_visible(False)

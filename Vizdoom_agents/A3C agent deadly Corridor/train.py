@@ -1,6 +1,6 @@
+import torch
 
 from model import a3cNetwork
-import torch
 from torch.autograd import Variable
 from vizdoom import *
 from utility import *

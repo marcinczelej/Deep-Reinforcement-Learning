@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+
 from torch.autograd import Variable
 
 class a3cNetwork(nn.Module):
@@ -8,12 +9,13 @@ class a3cNetwork(nn.Module):
         super(a3cNetwork, self).__init__()
         self.action_size = action_size
         
-        #input #240 x 320 x 1
+        #input 240 x 320 x 1
+        # resized to 100 x 120 x 1
         
-        self.layer_1 = nn.Conv2d(in_channels = 1, out_channels = 64, kernel_size = 5, stride=2, padding=1)  # 118 x 158 x 128
-        self.layer_2 = nn.Conv2d(in_channels = 64, out_channels = 64, kernel_size = 3, stride=2, padding=1) # 58 x 78 x 64
-        self.layer_3 = nn.Conv2d(in_channels = 64, out_channels = 64, kernel_size = 3, stride=2, padding=1) # 29 x 39 x 32
-        self.layer_4 = nn.Conv2d(in_channels = 64, out_channels = 64, kernel_size = 2, stride=2, padding=1) # 29 x 39 x 32
+        self.layer_1 = nn.Conv2d(in_channels = 1, out_channels = 64, kernel_size = 5, stride=2, padding=1)  
+        self.layer_2 = nn.Conv2d(in_channels = 64, out_channels = 64, kernel_size = 3, stride=2, padding=1) 
+        self.layer_3 = nn.Conv2d(in_channels = 64, out_channels = 64, kernel_size = 3, stride=2, padding=1) 
+        self.layer_4 = nn.Conv2d(in_channels = 64, out_channels = 64, kernel_size = 2, stride=2, padding=1) 
         
         self.batch_norm_64 = nn.BatchNorm2d(num_features=64)
         

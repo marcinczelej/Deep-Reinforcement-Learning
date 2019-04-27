@@ -1,5 +1,6 @@
-from skimage import transform, io
 import torch
+
+from skimage import transform
 
 left       = [1, 0, 0, 0, 0, 0, 0]
 right      = [0, 1, 0, 0, 0, 0, 0]
